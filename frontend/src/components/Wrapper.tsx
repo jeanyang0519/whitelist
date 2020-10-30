@@ -11,6 +11,7 @@ export const Wrapper: React.FC<WrapperProps> = ({
     variant = "regular"
 }) => {
     return (
+        
         <Box
             mt={8}
             mx="auto"
@@ -19,5 +20,6 @@ export const Wrapper: React.FC<WrapperProps> = ({
         >
             {children}
         </Box>
+        
     )
 }

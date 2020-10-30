@@ -1,6 +1,6 @@
 import React from 'react'
 import { Formik, Form } from 'formik'
-import { Box, Button, Link } from '@chakra-ui/core'
+import { Box, Button, Flex, IconButton, Link } from '@chakra-ui/core'
 import { Wrapper } from '../components/Wrapper'
 import { InputField } from '../components/InputField'
 import { useLoginMutation } from '../generated/graphql'
@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import { withUrqlClient } from 'next-urql'
 import { createUrqlClient } from '../utils/createUrqlClient'
 import NextLink from "next/link"
+import { PrimaryLink } from '../components/PrimaryLink'
 
 const Login: React.FC<{}> = ({}) => {
     const router = useRouter()
@@ -49,16 +50,17 @@ const Login: React.FC<{}> = ({}) => {
                             mt={4}
                             type="submit"
                             isLoading={isSubmitting}
-                            variantColor="teal"
+                            variantColor="blue"
                         >
-                            login
+                            Log in
                         </Button>
                     </Form>
                 )}
             </Formik>
-            <NextLink href="/register">
-                <Link>register</Link>
-            </NextLink>
+            <Flex>
+                <PrimaryLink href="/register" text="Register" mr="2"/>
+                <PrimaryLink href="/" text="Go back"/>
+            </Flex>
         </Wrapper>
     )
 }

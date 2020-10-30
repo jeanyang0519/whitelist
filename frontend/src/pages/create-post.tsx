@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button } from "@chakra-ui/core";
+import { Box, Button, Link } from "@chakra-ui/core";
 import { Form, Formik } from "formik";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
@@ -8,7 +8,8 @@ import { Layout } from "../components/Layout";
 import { useCreatePostMutation } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
 import { useIsAuth } from "../utils/useIsAuth"
-
+import NextLink from "next/link"
+import { PrimaryLink } from "../components/PrimaryLink";
 
 const CreatePost: React.FC<{}> = ({}) => {
   const router = useRouter()
@@ -18,23 +19,12 @@ const CreatePost: React.FC<{}> = ({}) => {
     <Layout variant="small">
       <Formik
         initialValues={{ plate: "", company: "" }}
-        // onSubmit={async (values) => {
-        //     const { error } = await createPost({ input: values })
-        //     if (error?.message.includes("not authenticated")) {
-        //         router.push("/login")
-        //     } else {
-        //         router.push("/")
-        //     }
-        //     // await createPost({input: values})        
-        // }}
         onSubmit={async (values) => {
           const { error } = await createPost({ input: values });
           if (!error) {
             router.push("/");
           }
         }}
-
-        
       >
         {({ isSubmitting }) => (
           <Form>
@@ -50,10 +40,16 @@ const CreatePost: React.FC<{}> = ({}) => {
               mt={4}
               type="submit"
               isLoading={isSubmitting}
-              variantColor="teal"
+              variantColor="blue"
             >
               Submit
             </Button>
+            {/* <Box fontSize="xs" mt={2}> */}
+              {/* <NextLink href="/">
+                  <Link>Go back</Link>
+              </NextLink> */}
+              <PrimaryLink href="/" text="Go back"/>
+            {/* </Box> */}
           </Form>
         )}
       </Formik>

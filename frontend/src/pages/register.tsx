@@ -47,16 +47,21 @@ const Register: React.FC<registerPrors> = ({}) => {
                             mt={4}
                             type="submit"
                             isLoading={isSubmitting}
-                            variantColor="teal"
+                            variantColor="blue"
                         >
                             register
                         </Button>
                     </Form>
                 )}
             </Formik>
-            <NextLink href="/login">
-                <Link>go to login</Link>
-            </NextLink>
+            <Box fontSize="xs" mt={2}>
+                <NextLink href="/login">
+                    <Link mr={2}>Log in</Link>
+                </NextLink>
+                <NextLink href="/">
+                    <Link>Go back</Link>
+                </NextLink>
+            </Box>
         </Wrapper>
     )
 }
