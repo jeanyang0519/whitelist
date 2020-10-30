@@ -18,19 +18,13 @@ export class PostResolver {
     async posts(): Promise<Post[] | null> {
     const posts = await getConnection().query(
         `
-        select p.*,
-        json_build_object(
-        'id', u.id,
-        'username', u.username,
-        'createdAt', u."createdAt",
-        'updatedAt', u."updatedAt"
-        ) creator
+        select p.*
         from post p
-        inner join public.user u on u.id = p."creatorId"
         order by p."createdAt" DESC
+
         `
     )
-console.log(posts)
+
         return posts
     }
 
