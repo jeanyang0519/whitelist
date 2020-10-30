@@ -16,7 +16,7 @@ const Index = () => {
   }
 
   if (!fetching && !data) {
-    return <div>Something wrong with your query</div>;
+    return <div>Something wrong with the query</div>;
   }
   
   return (

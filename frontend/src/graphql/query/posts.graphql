@@ -6,8 +6,5 @@ query Posts {
     plate
     company
     creatorId
-    creator {
-      username
-    }
   }
 }

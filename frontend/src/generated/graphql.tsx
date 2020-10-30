@@ -226,10 +226,6 @@ export type PostsQuery = (
   & { posts: Array<(
     { __typename?: 'Post' }
     & Pick<Post, 'id' | 'createdAt' | 'updatedAt' | 'plate' | 'company' | 'creatorId'>
-    & { creator: (
-      { __typename?: 'User' }
-      & Pick<User, 'username'>
-    ) }
   )> }
 );
 
@@ -355,9 +351,6 @@ export const PostsDocument = gql`
     plate
     company
     creatorId
-    creator {
-      username
-    }
   }
 }
     `;
