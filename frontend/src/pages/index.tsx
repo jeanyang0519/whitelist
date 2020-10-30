@@ -15,7 +15,6 @@ const Index = () => {
     return <div>you got query failed for some reason</div>;
   }
   
-  console.log("data in index file: ",data)
   return (
     <Layout>
       {!data && fetching ? (

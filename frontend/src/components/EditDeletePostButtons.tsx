@@ -18,7 +18,6 @@ export const EditDeletePostButtons: React.FC<EditDeletePostButtonsProps> = ({
   if (meData?.me?.id !== creatorId) {
     return null;
   }
-console.log("medata ----",meData)
 
   return (
     <Box>
