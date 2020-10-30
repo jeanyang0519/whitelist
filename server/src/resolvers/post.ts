@@ -1,43 +1,81 @@
 import { Post } from "../entities/Post"
-import { Arg, Mutation, Query, Resolver } from "type-graphql"
-import { sleep } from "../util/sleep"
+import { Arg, Ctx, Field, InputType, Int, Mutation, Query, Resolver, UseMiddleware } from "type-graphql"
+import { MyContext } from "../types"
+import { isAuth } from "../middleware/isAuth"
+import { getConnection } from "typeorm"
+
+@InputType()
+class PostInput {
+    @Field()
+    plate: string
+    @Field()
+    company: string
+}
 
 @Resolver()
 export class PostResolver {
     @Query(() => [Post])
     async posts(): Promise<Post[]> {
-        await sleep(1000)
-        return Post.find()
+    const posts = await getConnection().query(
+        `
+        SELECT p.*, json_build_object(
+                'username', u."username"
+            ) creator
+        FROM post p, public.user u 
+        WHERE p."creatorId" = u."id"
+
+        `
+    )
+
+        return posts
     }
 
     @Query(() => Post, {nullable: true})
-    post(@Arg("id") id: number): Promise<Post | undefined> {
+    post(@Arg("id", () => Int) id: number): Promise<Post | undefined> {
         return Post.findOne(id)
     }
 
     @Mutation(() => Post)
-    async createPost(@Arg("title") title: string): Promise<Post> {
-        return Post.create({ title }).save()
+    @UseMiddleware(isAuth)
+    async createPost(
+        @Arg("input") input: PostInput,
+        @Ctx() { req }: MyContext
+    ): Promise<Post> {
+        return Post.create({
+        ...input,
+        creatorId: req.session.userId,
+        }).save();
     }
 
     @Mutation(() => Post, { nullable: true })
+    @UseMiddleware(isAuth)
     async updatePost(
-        @Arg("id") id: number,
-        @Arg("title", () => String, { nullable: true }) title: string,
+        @Arg("id", () => Int) id: number,
+        @Arg("plate") plate: string,
+        @Arg("company") company: string,
+        @Ctx() { req }: MyContext
     ): Promise<Post | null> {
-        const post = await Post.findOne(id)
-        if(!post) {
-            return null
-        }
-        if (typeof title !== "undefined") {
-            await Post.update({ id }, { title })
-        }
-        return post
+        const result = await getConnection()
+        .createQueryBuilder()
+        .update(Post)
+        .set({ plate, company })
+        .where('id = :id and "creatorId" = :creatorId', {
+            id,
+            creatorId: req.session.userId,
+        })
+        .returning("*")
+        .execute();
+
+        return result.raw[0];
     }
 
     @Mutation(() => Boolean)
-    async deletePost(@Arg("id") id: number): Promise<Boolean> {
-        await Post.delete(id)
-        return true
+    @UseMiddleware(isAuth)
+    async deletePost(
+        @Arg("id", () => Int) id: number,
+        @Ctx() { req }: MyContext
+    ): Promise<boolean> {
+        await Post.delete({ id, creatorId: req.session.userId });
+        return true;
     }
 }
