@@ -215,10 +215,6 @@ export type PostQuery = (
   & { post?: Maybe<(
     { __typename?: 'Post' }
     & Pick<Post, 'id' | 'createdAt' | 'updatedAt' | 'plate' | 'company'>
-    & { creator: (
-      { __typename?: 'User' }
-      & Pick<User, 'id' | 'username'>
-    ) }
   )> }
 );
 
@@ -339,10 +335,6 @@ export const PostDocument = gql`
     updatedAt
     plate
     company
-    creator {
-      id
-      username
-    }
   }
 }
     `;

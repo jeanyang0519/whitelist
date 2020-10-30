@@ -5,9 +5,5 @@ query Post($id: Int!) {
     updatedAt
     plate
     company
-    creator {
-      id
-      username
-    }
   }
 }

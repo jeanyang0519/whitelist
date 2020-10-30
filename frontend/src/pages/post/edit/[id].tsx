@@ -1,8 +1,8 @@
+import React from "react";
 import { Box, Button } from "@chakra-ui/core";
 import { Form, Formik } from "formik";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
-import React from "react";
 import { InputField } from "../../../components/InputField";
 import { Layout } from "../../../components/Layout";
 import {
@@ -22,6 +22,7 @@ const EditPost = ({}) => {
     },
   });
   const [, updatePost] = useUpdatePostMutation();
+  
   if (fetching) {
     return (
       <Layout>
@@ -29,7 +30,7 @@ const EditPost = ({}) => {
       </Layout>
     );
   }
-
+  
   if (!data?.post) {
     return (
       <Layout>
@@ -40,34 +41,34 @@ const EditPost = ({}) => {
 
   return (
     <Layout variant="small">
-      <Formik
-        initialValues={{ plate: data.post.plate, company: data.post.company }}
-        onSubmit={async (values) => {
-          await updatePost({ id: intId, ...values });
-          router.back();
-        }}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <InputField name="plate" placeholder="plate" label="plate" />
-            <Box mt={4}>
-              <InputField
-                name="company"
-                placeholder="company..."
-                label="Body"
-              />
-            </Box>
-            <Button
-              mt={4}
-              type="submit"
-              isLoading={isSubmitting}
-              variantColor="teal"
-            >
-              update post
-            </Button>
-          </Form>
-        )}
-      </Formik>
+        <Formik
+            initialValues={{ plate: data.post.plate, company: data.post.company }}
+            onSubmit={async (values) => {
+            await updatePost({ id: intId, ...values });
+            router.back();
+            }}
+        >
+            {({ isSubmitting }) => (
+            <Form>
+                <InputField name="plate" placeholder="plate" label="plate" />
+                <Box mt={4}>
+                <InputField
+                    name="company"
+                    placeholder="company..."
+                    label="Body"
+                />
+                </Box>
+                <Button
+                mt={4}
+                type="submit"
+                isLoading={isSubmitting}
+                variantColor="teal"
+                >
+                update post
+                </Button>
+            </Form>
+            )}
+        </Formik>
     </Layout>
   );
 };

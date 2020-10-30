@@ -5,13 +5,20 @@ import { Layout } from "../components/Layout"
 import { useDeletePostMutation, usePostsQuery } from "../generated/graphql"
 import { createUrqlClient } from "../utils/createUrqlClient"
 import NextLink from "next/link"
+import { EditDeletePostButtons } from "../components/EditDeletePostButtons"
 
 const Index = () => {
-  const [{ data }] = usePostsQuery()
+  const [{ data, fetching }] = usePostsQuery()
   const [, deletePost] = useDeletePostMutation()
+
+  if (!fetching && !data) {
+    return <div>you got query failed for some reason</div>;
+  }
+  
+  console.log("data in index file: ",data)
   return (
     <Layout>
-      {!data ? (
+      {!data && fetching ? (
           <div>loading...</div>
         ) : (
           <Stack spacing={8}>
@@ -31,16 +38,9 @@ const Index = () => {
                         {p.company}
                       </Text>
                       <Box ml="auto">
-                        {/* <EditDeletePostButtons
+                        <EditDeletePostButtons
                           id={p.id}
-                          creatorId={p.creator.id}
-                        /> */}
-                        <IconButton 
-                          icon="delete"
-                          aria-label="delete post"
-                          onClick={
-                            () => deletePost({ id: p.id })
-                          }
+                          creatorId={p.creatorId}
                         />
                       </Box>
                     </Flex>

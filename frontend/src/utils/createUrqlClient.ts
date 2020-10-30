@@ -1,5 +1,5 @@
 import { dedupExchange, fetchExchange } from "urql";
-import { cacheExchange } from "@urql/exchange-graphcache";
+import { cacheExchange, Cache } from "@urql/exchange-graphcache";
 import {
   LogoutMutation,
   MeQuery,
@@ -25,6 +25,9 @@ export const createUrqlClient = (ssrExchange: any) => ({
                 __typename: "Post",
                 id: (args as DeletePostMutationVariables).id,
               });
+          },
+          createPost: (_result, args, cache, info) => {
+              cache.invalidate("Query", "posts")
           },
           logout: (_result, args, cache, info) => {
             betterUpdateQuery<LogoutMutation, MeQuery>(

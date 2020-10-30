@@ -3,7 +3,7 @@ import { Box, Button } from "@chakra-ui/core";
 import { Form, Formik } from "formik";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
-import { InputField } from "../components/InputFieldProps";
+import { InputField } from "../components/InputField";
 import { Layout } from "../components/Layout";
 import { useCreatePostMutation } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
@@ -18,26 +18,23 @@ const CreatePost: React.FC<{}> = ({}) => {
     <Layout variant="small">
       <Formik
         initialValues={{ plate: "", company: "" }}
-        onSubmit={async (values) => {
-            const { error } = await createPost({ input: values })
-            if (error?.message.includes("not authenticated")) {
-                router.push("/login")
-            } else {
-                router.push("/")
-            }
-            // await createPost({input: values})        
-        }}
         // onSubmit={async (values) => {
-        //   const { errors } = await createPost({
-        //     variables: { input: values },
-        //     update: (cache) => {
-        //       cache.evict({ fieldName: "posts:{}" });
-        //     },
-        //   });
-        //   if (!errors) {
-        //     router.push("/");
-        //   }
+        //     const { error } = await createPost({ input: values })
+        //     if (error?.message.includes("not authenticated")) {
+        //         router.push("/login")
+        //     } else {
+        //         router.push("/")
+        //     }
+        //     // await createPost({input: values})        
         // }}
+        onSubmit={async (values) => {
+          const { error } = await createPost({ input: values });
+          if (!error) {
+            router.push("/");
+          }
+        }}
+
+        
       >
         {({ isSubmitting }) => (
           <Form>
