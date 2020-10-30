@@ -22,8 +22,8 @@ const EditPost = ({}) => {
     },
   });
   const [, updatePost] = useUpdatePostMutation();
-  
-  if (fetching) {
+
+  if (fetching || !data?.post) {
     return (
       <Layout>
         <div>loading...</div>
@@ -31,13 +31,13 @@ const EditPost = ({}) => {
     );
   }
   
-  if (!data?.post) {
-    return (
-      <Layout>
-        <Box>could not find post</Box>
-      </Layout>
-    );
-  }
+//   if (!data?.post) {
+//     return (
+//       <Layout>
+//         <Box>could not find post</Box>
+//       </Layout>
+//     );
+//   }
 
   return (
     <Layout variant="small">
