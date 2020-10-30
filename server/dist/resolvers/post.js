@@ -43,13 +43,18 @@ let PostResolver = class PostResolver {
     posts() {
         return __awaiter(this, void 0, void 0, function* () {
             const posts = yield typeorm_1.getConnection().query(`
-        SELECT p.*, json_build_object(
-                'username', u."username"
-            ) creator
-        FROM post p, public.user u 
-        WHERE p."creatorId" = u."id"
-
+        select p.*,
+        json_build_object(
+        'id', u.id,
+        'username', u.username,
+        'createdAt', u."createdAt",
+        'updatedAt', u."updatedAt"
+        ) creator
+        from post p
+        inner join public.user u on u.id = p."creatorId"
+        order by p."createdAt" DESC
         `);
+            console.log(posts);
             return posts;
         });
     }

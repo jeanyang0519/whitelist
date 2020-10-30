@@ -14,7 +14,7 @@ const Index = () => {
   if (!fetching && !data) {
     return <div>you got query failed for some reason</div>;
   }
-  
+  // console.log("data-------",data.posts.map((p) => p.plate))
   return (
     <Layout>
       {!data && fetching ? (
