@@ -31,14 +31,6 @@ const EditPost = ({}) => {
       </Layout>
     );
   }
-  
-//   if (!data?.post) {
-//     return (
-//       <Layout>
-//         <Box>could not find post</Box>
-//       </Layout>
-//     );
-//   }
 
   return (
     <Layout variant="small">

@@ -1,6 +1,6 @@
 import React from "react";
-import { Wrapper, WrapperVariant } from "./Wrapper";
-import { Link, Flex, Text, Button, Stack, Heading } from "@chakra-ui/core"
+import { Wrapper } from "./Wrapper";
+import { Flex, Text, Button, Stack, Heading } from "@chakra-ui/core"
 import NextLink from "next/link"
 
 interface SplashProps {}
@@ -8,10 +8,12 @@ interface SplashProps {}
 export const Splash: React.FC<SplashProps> = ({}) => {
   return (
     <Wrapper>
-        <Stack justify="center">
+        <Flex justify="center">
+        <Stack >
             <Heading size="2xl">
                 Whitelist
             </Heading>
+            <Text pb="50px">Manage your parking easy breezy</Text>
             <Flex>
                 <NextLink href="/register">
                     <Button variantColor="blue" mr={2}>Get started</Button>
@@ -21,6 +23,7 @@ export const Splash: React.FC<SplashProps> = ({}) => {
                 </NextLink>
             </Flex>
         </Stack>
+        </Flex>
     </Wrapper>
   );
 };

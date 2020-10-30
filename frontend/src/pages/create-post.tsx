@@ -9,7 +9,6 @@ import { useCreatePostMutation } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
 import { useIsAuth } from "../utils/useIsAuth"
 import NextLink from "next/link"
-import { PrimaryLink } from "../components/PrimaryLink";
 
 const CreatePost: React.FC<{}> = ({}) => {
   const router = useRouter()
@@ -44,12 +43,11 @@ const CreatePost: React.FC<{}> = ({}) => {
             >
               Submit
             </Button>
-            {/* <Box fontSize="xs" mt={2}> */}
-              {/* <NextLink href="/">
+            <Box fontSize="xs" mt={2}>
+              <NextLink href="/">
                   <Link>Go back</Link>
-              </NextLink> */}
-              <PrimaryLink href="/" text="Go back"/>
-            {/* </Box> */}
+              </NextLink>
+            </Box>
           </Form>
         )}
       </Formik>
