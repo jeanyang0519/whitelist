@@ -13,7 +13,7 @@ export const Splash: React.FC<SplashProps> = ({}) => {
             <Heading size="2xl">
                 Whitelist
             </Heading>
-            <Text pb="50px">Manage your parking easy breezy</Text>
+            <Text>Manage your parking easy breezy</Text>
             <Flex>
                 <NextLink href="/register">
                     <Button variantColor="blue" mr={2}>Get started</Button>

@@ -30,7 +30,7 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
     } else {
         body = (
             <Flex align="center" >
-            <Box mr={4}>Hi {data.me.username} !</Box>
+            <Box mr={4}>Hi {data.me.username}!</Box>
                     <NextLink href="/create-post">
                         <Button
                             size="sm"
@@ -60,7 +60,7 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
                 <Box>
                     <NextLink href="/">
                     <Link>
-                        <Heading>Whitelist</Heading>
+                        <Heading color="white">Whitelist</Heading>
                     </Link>
                     </NextLink>
                 </Box>

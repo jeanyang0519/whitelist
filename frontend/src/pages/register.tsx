@@ -49,7 +49,7 @@ const Register: React.FC<registerPrors> = ({}) => {
                             isLoading={isSubmitting}
                             variantColor="blue"
                         >
-                            register
+                            Register
                         </Button>
                     </Form>
                 )}
