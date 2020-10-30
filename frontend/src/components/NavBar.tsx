@@ -30,11 +30,11 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
     } else {
         body = (
         <Flex align="center">
-            {/* <NextLink href="/create-post">
+            <NextLink href="/create-post">
             <Button as={Link} mr={4}>
                 create post
             </Button>
-            </NextLink> */}
+            </NextLink>
             <Box mr={2}>{data.me.username}</Box>
             <Button
             // onClick={async () => {

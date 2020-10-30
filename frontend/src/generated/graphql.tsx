@@ -31,6 +31,7 @@ export type Post = {
   plate: Scalars['String'];
   company: Scalars['String'];
   creatorId: Scalars['Float'];
+  creator: User;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
 };
@@ -60,13 +61,14 @@ export type MutationCreatePostArgs = {
 
 
 export type MutationUpdatePostArgs = {
-  plate?: Maybe<Scalars['String']>;
-  id: Scalars['Float'];
+  company: Scalars['String'];
+  plate: Scalars['String'];
+  id: Scalars['Int'];
 };
 
 
 export type MutationDeletePostArgs = {
-  id: Scalars['Float'];
+  id: Scalars['Int'];
 };
 
 
@@ -119,6 +121,16 @@ export type CreatePostMutation = (
   ) }
 );
 
+export type DeletePostMutationVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type DeletePostMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'deletePost'>
+);
+
 export type LoginMutationVariables = Exact<{
   username: Scalars['String'];
   password: Scalars['String'];
@@ -167,6 +179,21 @@ export type RegisterMutation = (
   ) }
 );
 
+export type UpdatePostMutationVariables = Exact<{
+  id: Scalars['Int'];
+  plate: Scalars['String'];
+  company: Scalars['String'];
+}>;
+
+
+export type UpdatePostMutation = (
+  { __typename?: 'Mutation' }
+  & { updatePost?: Maybe<(
+    { __typename?: 'Post' }
+    & Pick<Post, 'id' | 'plate' | 'company'>
+  )> }
+);
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -211,6 +238,15 @@ export const CreatePostDocument = gql`
 export function useCreatePostMutation() {
   return Urql.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument);
 };
+export const DeletePostDocument = gql`
+    mutation DeletePost($id: Int!) {
+  deletePost(id: $id)
+}
+    `;
+
+export function useDeletePostMutation() {
+  return Urql.useMutation<DeletePostMutation, DeletePostMutationVariables>(DeletePostDocument);
+};
 export const LoginDocument = gql`
     mutation Login($username: String!, $password: String!) {
   login(options: {username: $username, password: $password}) {
@@ -253,6 +289,19 @@ export const RegisterDocument = gql`
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
+};
+export const UpdatePostDocument = gql`
+    mutation UpdatePost($id: Int!, $plate: String!, $company: String!) {
+  updatePost(id: $id, plate: $plate, company: $company) {
+    id
+    plate
+    company
+  }
+}
+    `;
+
+export function useUpdatePostMutation() {
+  return Urql.useMutation<UpdatePostMutation, UpdatePostMutationVariables>(UpdatePostDocument);
 };
 export const MeDocument = gql`
     query Me {

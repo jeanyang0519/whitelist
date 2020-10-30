@@ -6,6 +6,7 @@ import {
   MeDocument,
   LoginMutation,
   RegisterMutation,
+  DeletePostMutationVariables,
 } from "../generated/graphql";
 import { betterUpdateQuery } from "./betterUpdateQuery";
 
@@ -19,6 +20,12 @@ export const createUrqlClient = (ssrExchange: any) => ({
     cacheExchange({
       updates: {
         Mutation: {
+          deletePost: (_result, args, cache, info) => {
+              cache.invalidate({
+                __typename: "Post",
+                id: (args as DeletePostMutationVariables).id,
+              });
+          },
           logout: (_result, args, cache, info) => {
             betterUpdateQuery<LogoutMutation, MeQuery>(
               cache,

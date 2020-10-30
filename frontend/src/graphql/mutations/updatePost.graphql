@@ -1,0 +1,7 @@
+mutation UpdatePost($id: Int!, $plate: String!, $company: String!) {
+  updatePost(id: $id, plate: $plate, company: $company) {
+    id
+    plate
+    company
+  }
+}
